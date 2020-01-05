@@ -1,0 +1,53 @@
+from Shapes import *
+def main():
+
+    t = triangle(sidelength = 100)
+    t.render()
+    t.erase()
+    t.translate(Vector(50,20))
+    t.render()
+    t.erase()
+    t.rotate(90,Vector(30,20))
+    t.render()
+    t.erase()
+    t.scale(2)
+    t.render()
+    t.erase()
+    
+    square = Square(width = 75)
+    square.render()
+    square.render()
+    square.erase()
+    square.translate(Vector(50,20))
+    square.render()
+    square.erase()
+    square.rotate(90,Vector(30,20))
+    square.render()
+    square.erase()
+    square.scale(2)
+    square.render()
+    square.erase()
+    
+    rectangle = Rectangle(width - 75, height = 150)
+    rectangle.render()
+    rectangle.erase()
+    rectangle.translate(Vector(50,20))
+    rectangle.render()
+    rectangle.erase()
+    rectangle.rotate(90,Vector(30,20))
+    rectangle.render()
+    rectangle.erase()
+    recangle.scale(2)
+    rectangle.render()
+    rectangle.erase()
+    
+    circle = Circle(radius = 100)
+    circle.render()
+    circle.erase()
+    circle.translate(Vector(100,100))
+    circle.erase()
+    circle.scale(0.5)
+    circle.erase()
+    
+
+    

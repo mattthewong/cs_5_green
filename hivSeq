@@ -1,0 +1,180 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-15"></head><body class="composite"><p>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+  <!-- base href="https://www.cs.hmc.edu/twiki/bin/view/CS6/RNASecondaryStructure" --> 
+
+  <title>CS6 - RNASecondaryStructure</title>
+
+
+  <link rel="stylesheet" title="HMCCS5Skin" type="text/css" href="hivSeq_files/hmccs6-2.css">
+  <link rel="stylesheet" title="HMCCS5Skin" type="text/css" href="hivSeq_files/hmccs6-colors-ltgreen.css">
+  <link rel="stylesheet" title="HMCCS5Skin" type="text/css" href="hivSeq_files/hmccs5-colors-ltgreen.html">
+
+  <style type="text/css">
+  .header {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves.jpg);
+  }
+  .sidebar {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves_light.jpg);
+  }
+  .subheader {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves_light.jpg);
+  }
+  .footer {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves_light.jpg);
+  }
+  </style>
+
+
+</p><p>
+<!-- change this body tag's css! -->
+
+</p><p>
+<a name="top"></a>
+</p><p>
+</p><div class="header">
+  <img class="logo" src="hivSeq_files/CS5Green.png">
+</div>
+<p>
+</p><div class="sidebar">
+  <div class="global_side">
+  <h3>Links</h3>
+<a href="http://submissions.cs.hmc.edu/Web-CAT/WebObjects/Web-CAT.woa" target="_top">Submission site</a><br><br>
+<a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/WebHome" class="twikiLink">CS 5 Green home</a><br><br>
+<p>
+  </p></div>
+<p>
+  </p><hr style="margin-right:8px;">
+<p>
+  </p><div class="homework_stuff">
+<a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/WebHome#HomeworkAndLabs" class="twikiAnchorLink">Assignments Index</a>
+  </div>
+<p>
+  </p><hr style="margin-right:8px;">
+<p>
+  </p><div class="local_side">
+<p>
+  </p></div>
+<p>
+</p></div>
+<p>
+</p><div class="subheader">
+  <a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/WebHome" class="twikiLink">CS6 Web</a> &gt; <a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/GreenHomework9" class="twikiLink">GreenHomework9</a> &gt;
+  <a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/RNASecondaryStructure" class="twikiLink">RNASecondaryStructure</a>
+  <div style="margin-bottom: 6px;">
+	 Next Homework: Homework 9 &nbsp;&nbsp;Due on: Tuesday, November 11 at 11:59 PM <br>
+	 Next Lab: Lab 9 &nbsp;&nbsp;Will be held on: Friday, October 7, 3-5 PM
+  </div>
+</div>
+<p>
+</p><div class="main">
+<a name="text"></a><h2><a name="RNA_secondary_structure_warmup"></a> RNA secondary structure warmup </h2>
+<p>
+In this problem, you'll implement a fast algorithm for RNA folding and 
+add an additional feature that makes the algorithm more biologically 
+realistic. Your code will go in a file called <code>rna.py</code>.
+</p><p>
+Begin by downloading <a href="http://www.cs.hmc.edu/%7Ecfb/u4/hivSeqs.py" target="_top">hivSeqs.py</a>. Then create <code>rna.py</code> and place it in the same directory as <code>hivSeqs.py</code>. Paste the following at the top of <code>rna.py</code> in order to import some Python features that we'll need and set the limit on the number of levels of recursion to 100000:
+</p><p>
+</p><pre>import sys
+sys.setrecursionlimit(100000)
+from hivSeqs import *
+</pre>
+<p>
+In the text, we wrote a recursive function called <code>fold</code> that
+ calculates the score of the best fold. In this problem you'll make 
+several important modifications to that function. For your reference, 
+here is <code>fold</code>:
+</p><p>
+</p><pre>def fold(RNA):
+    """Use-it-or-lose-it RNA secondary structure prediction, returns
+    score."""
+    if len(RNA)&lt;2:
+        return 0
+    else:
+        bestSoFar=fold(RNA[1:])     # lose it case
+        for i in range(1,len(RNA)): # use it cases
+            if isComplement(RNA[0],RNA[i]):
+                score=1+fold(RNA[1:i])+fold(RNA[(i+1):])
+                if score&gt;bestSoFar:
+                    bestSoFar=score
+        return bestSoFar
+
+</pre>
+<p>
+Note that <code>fold</code> made use of a helper function <code>isComplement</code>:
+</p><p>
+</p><pre>def isComplement(base1,base2):
+    """Returns boolean indicating if 2 RNA bases are complementary."""
+    if base1=="A" and base2=="U":
+        return True
+    elif base1=="U" and base2=="A":
+        return True
+    elif base1=="C" and base2=="G":
+        return True
+    elif base1=="G" and base2=="C":
+        return True
+    if base1=="G" and base2=="U":
+        return True
+    elif base1=="U" and base2=="G":
+        return True
+    else:
+        return False
+</pre>
+<p>
+</p><h3><a name="Memoized_folding_with_mfold_RNA"></a><a name="Memoized_folding_with_mfold_RNA_"></a> Memoized folding with <code>mfold(RNA, memo)</code> </h3>
+<p>
+Try to run <code>fold</code> on the sequence <code>testRNA</code>. This is a fragment about 120 bp long from the HIV genome. (It is contained in the file <code>hivSeqs.py</code> which we imported.)
+</p><p>
+</p><pre>&gt;&gt;&gt; fold(testRNA)
+</pre>
+<p>
+That was mean!  A very conservative estimate shows that the <code>fold</code> function will take several <em>trillion</em>
+ years to complete this computation on even a very fast computer.  Since
+ your education will be over by then, you may press CTRL-C now to stop 
+the <code>fold</code> function.
+</p><p>
+Your next task, therefore, is to write a memoized version of <code>fold</code> called <code>mfold( RNA, memo )</code>.  It will look very similar to <code>fold</code> but will have a dictionary as a memo.  Your <code>mfold</code> function will differ from your <code>fold</code> function in just a few lines! (If you need a refresher on memoization, see Part 2 of the text.)
+</p><p>
+Notice that to run this function, we will start with an empty memo.  The function will build up this memo as it runs.
+</p><p>
+Now, try your <code>mfold</code> function on the <code>testRNA</code> above.  
+</p><pre>&gt;&gt;&gt; mfold(testRNA, {})
+46
+</pre>  
+<p>
+</p><h3><a name="A_slight_modification_to_the_fol"></a> A slight modification to the folding rule: <code>mfold5( RNA, memo )</code> </h3>
+<p>
+In <code>fold</code>, we've made some simplifying assumptions about how 
+RNA folds.  One assumption is that any base can match with a 
+complementary base, no matter how near or how far away those matching 
+bases are in the primary sequence.  In fact, a more accurate model is to
+ assume that a base can only pair with a base at least five positions 
+apart due to steric constraints (that is, constraints on how close 
+molecules can be to one another).  So, for example, in the sequence <code>ACCUCU</code> the first <code>A</code> cannot match with the first <code>U</code> because they are only three positions apart.  However, the first <code>A</code> can match with the last <code>U</code> because they are 5 positions apart. Pairing those outer two bases is all we can do in this case.
+</p><p>
+Create a new memoized function called <code>mfold5( RNA, memo )</code> that is just like your <code>mfold</code>
+ function but only permits pairs that are at least five positions apart.
+  The solution scores we get now will be lower than what we got with <code>mfold</code> because we are inhibiting nearby matches.
+</p><p>
+</p><pre>&gt;&gt;&gt; mfold5(testRNA, {})
+39
+</pre>
+<p>
+</p><h3><a name="Submit"></a><a name="Submit_"></a> Submit! </h3>
+<p>
+Submit your <code>rna.py</code> file in your homework zip file.<a name="bottom"></a>
+</p></div>
+<p>
+</p><p>
+</p><div class="footer">
+  <a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/WebHome" class="twikiLink">CS6 Web</a> &gt; <a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/GreenHomework9" class="twikiLink">GreenHomework9</a> &gt;
+  <a href="https://www.cs.hmc.edu/twiki/bin/view/CS6/RNASecondaryStructure" class="twikiLink">RNASecondaryStructure</a>
+  <!-- <div class="date">Fri Nov 07, 2014</div> -->
+<p>
+</p></div>
+<p>
+</p><p>
+
+</p></body></html>

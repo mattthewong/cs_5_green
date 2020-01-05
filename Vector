@@ -1,0 +1,190 @@
+<html>
+<p />
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+  <base href="https://www.cs.hmc.edu/twiki/bin/view/CS6/VectorVictor"> 
+
+  <title>CS6 - VectorVictor</title>
+
+
+  <link rel="stylesheet"
+		  title="HMCCS5Skin"
+		  type="text/css"
+		  href="/twiki/pub/TWiki/HMCCS6Skin/hmccs6-2.css" >
+  <link rel="stylesheet"
+		  title="HMCCS5Skin" 
+		  type="text/css"
+		  href="/twiki/pub/TWiki/HMCCS6Skin/hmccs6-colors-ltgreen.css" >
+  <link rel="stylesheet"
+		  title="HMCCS5Skin"
+		  type="text/css"
+		  href="/twiki/pub/TWiki/HMCCS5Skin/hmccs5-colors-ltgreen.css" >
+
+  <style type="text/css">
+  .header {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves.jpg);
+  }
+  .sidebar {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves_light.jpg);
+  }
+  .subheader {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves_light.jpg);
+  }
+  .footer {
+	 background-image: url(http://www.cs.hmc.edu/~cs5grad/cs6/Images/leaves_light.jpg);
+  }
+  </style>
+
+</head>
+<p />
+<!-- change this body tag's css! -->
+<body class="composite">
+<p />
+<a name="top"></a>
+<p />
+<div class="header">
+  <img class="logo" src="http://www.cs.hmc.edu/~cs5grad/cs6/Images/CS5Green.png">
+</div>
+<p />
+<div class="sidebar">
+  <div class="global_side">
+  <h3>Links</h3>
+<a href="http://submissions.cs.hmc.edu/Web-CAT/WebObjects/Web-CAT.woa" target="_top">Submission site</a><br><br>
+<a href="/twiki/bin/view/CS6/WebHome" class="twikiLink">CS 5 Green home</a><br><br>
+<p />
+  </div>
+<p />
+  <hr style="margin-right:8px;">
+<p />
+  <div class="homework_stuff">
+<a href="/twiki/bin/view/CS6/WebHome#HomeworkAndLabs" class="twikiAnchorLink">Assignments Index</a>
+  </div>
+<p />
+  <hr style="margin-right:8px;">
+<p />
+  <div class="local_side">
+<p />
+  </div>
+<p />
+</div>
+<p />
+<div class="subheader">
+  <a href="/twiki/bin/view/CS6/WebHome" class="twikiLink">CS6 Web</a> &gt; <a href="/twiki/bin/view/CS6/GreenHomework10" class="twikiLink">GreenHomework10</a> &gt;
+  <a href="/twiki/bin/view/CS6/VectorVictor" class="twikiLink">VectorVictor</a>
+  <div style="margin-bottom: 6px;">
+	 Next Homework: Homework 10 &nbsp;&nbsp;Due on: Tuesday, November 18 at 11:59 PM <br>
+	 Next Lab: Lab 10 &nbsp;&nbsp;Will be held on: Friday, October 14, 3-5 PM
+  </div>
+</div>
+<p />
+<div class="main">
+<a name="text"></a><h2><a name="Vector_Victor_Roger_Roger"></a><a name="Vector_Victor_Roger_Roger_"></a> Vector, Victor?  Roger, Roger! </h2>
+<p />
+If the title of this section doesn't mean anything to you, you must see the classic film
+"Airplane" as soon as possible.
+<p />
+Next, you will use object-oriented programming to build a <code>Vector</code> class as we described in lecture.  In Problem 2, you will use this <code>Vector</code> class to define
+an <code>Ant</code> class and simulate a set of ants, each one of which is attracted to one other ant.
+<p />
+In class we motivated objects through the use of a <code>Rational</code>
+number class.  In this part of the lab, you will design and implement a class called <code>Vector</code> for 2-dimensional vectors. 
+Here's what you should have in this class.  (<strong>Please note</strong> that there are <em>two</em> underscore characters before and after each method name): 
+<p /> <ul>
+<li> <strong>__init__(self, x, y)</strong>:  This is the "constructor" for the class.  The user specifies floating point values <code>x</code> and <code>y</code> and these are the values for the vector.  Note that there are two underscores before and two underscores after the word "init".  This is the format for every "overloaded" method (as is "add" and "sub" below).
+</li> <li> <strong>__repr__(self)</strong>:  Returns a string representing the vector.  Recall that this method will automatically be invoked when you ask to print the vector.  You can choose how the string representation should look, but one common representation is something like this:  <code>(3, 42)</code> where 3 is the x-coordinate and 42 is the y-coordinate. 
+</li> <li> <strong>magnitude(self)</strong>:  Returns the floating point magnitude of the vector.  (Recall that if you <code>import math</code> in your file, you can use <code>math.sqrt(blah)</code> to compute the square root of <code>blah</code>).  The <code>math</code> package has all kinds of other snazzy functions, including trigonometric ones and others.  You can Google "python math" to learn more about it.
+</li> <li> <strong>normalize(self)</strong>:  Changes the x- and y-coordinates of the vector so that the vector has magnitude 1 but the same direction as before.
+</li> <li> <strong>__add__(self, other)</strong>:  Returns a new vector that is the sum of the current vector and the given <code>other</code> vector.  Recall that when the function is named in this funny way, using the "+" sign will automatically invoke this function (see examples below).
+</li> <li> <strong>__sub__(self, other)</strong>:  Returns a new vector that is the difference <code>self - other</code>.  Recall that when the function is named in this funny way, using the "-" sign will automatically invoke this function (see examples below).
+</li></ul> 
+<p />
+To get you started, here is what the class will look like:
+<pre>
+class Vector:
+  def &#95;&#95;init&#95;&#95;(self, x, y):
+     self.x &#61; x  # Notice that x is the name of the input, but self.x is our own self&#39;s copy of that!
+     self.y &#61; y  # ... and same for y
+  
+  # You will need to write the rest of the methods!
+</pre>
+<p />
+<!-- <ul>
+<li> <strong>__getitem__(self,a)</strong>: Allows <code>x[0]</code>.  This should return the <code>a=th element of data.&nbsp; For a 2-D vector, then, =x[0]</code> returns the X value of the vector, and <code>x[1]</code> returns the Y value.
+</li> <li> <strong>__setitem__(self,a,v)</strong>: Allows <code>x[0] = 1</code>.  With this, you'll be able to set a vector value at <code>a</code> to value <code>v</code>.
+</li> <li> <strong>__len__(self)</strong>: Allows <code>len(x)</code>.  This should return the dimension of the vector - a 2-D vector should return <code>2</code>.
+</li> <li> <strong>__eq__(self, other)</strong>: Allows <code>x ==</code> <code>y</code>.  Two <code>Vectors</code> are equal if they have all the same components.
+</li> <li> <strong>__add__(self,other)</strong>: Allows <code>x + y</code>.  This should return a new <code>Vector</code> with components representing the sum of 2 old vectors, but it should <strong>not</strong> modify either of the old <code>Vectors</code>.
+</li> <li> <strong>__sub__(self,other)</strong>: Allows <code>x - y</code>.  Again, this should return a new <code>Vector</code> and <strong>not</strong> modify either of the old <code>Vectors</code>.
+</li> <li> <strong>__mul__(self, scalar)</strong>: Allows <code>x*3</code>.  This should return a new <code>Vector</code> without modifying <code>x</code>.
+</li> <li> <strong>__neg__(self)</strong>: Allows <code>-x</code>.  This should not modify <code>x</code>, but should return a new <code>Vector</code> with negated components of <code>x</code>.
+</li> <li> <strong>__iadd__(self,other)</strong>: Allows <code>x +=</code> <code>y</code>.  This <strong>should</strong> modify the <code>data</code> stored in the <code>Vector</code>.  Hint: you need to return <code>self</code> at the end.
+</li> <li> <strong>__isub__(self,other)</strong>: Allows <code>x -=</code> <code>y</code>.  This should also modify the old <code>Vector</code> and return it.
+</li> <li> <strong>__imul__(self, scalar)</strong>: Allows <code>x *=</code> <code>y</code>.  This should also modify the old <code>Vector</code> and return it.  If the second item is not a scalar, you should print "Must be scalar multiplication".  We'll have dot and cross products later, and we don't want to create confusion by having one of them use the <code>*</code> operator and not the other.
+</li> <li> <strong>magnitude(self)</strong>: Should return the magnitude of the <code>Vector</code>.  That's the same as its length if it were a line.
+</li> <li> <strong>dot(self,other)</strong>: Should return the dot product of itself and the <code>other Vector</code>. 
+</li> <li> <strong>cross(self, other)</strong>: Should return a new <code>Vector</code> representing the cross product.  Only calculate this for 3-D <code>Vectors</code> (cross product has no meaning for any dimension except 3 and 7, and 7's a beast to calculate).
+</li> <li> <strong>angleBetween(self, other)</strong>: Should return the angle between 2 vectors.  Look up the formulas for those if you don't remember them (but you should!!)
+</li> <li> <strong>distanceTo(self, other)</strong>: If the two <code>Vectors</code> represent points in space, how far away are they from each other?
+</li> <li> <strong>unit(self)</strong>: Makes a new <code>Vector</code> representing a unit <code>Vector</code> (magnitude 1) pointed in the same direction as <code>self</code>. 
+</li> <li> <strong>rotate(self, angle)</strong>:  Should rotate a 2-D <code>Vector</code> about the origin by a certain angle.  You can look up how to do that <a href="http://en.wikipedia.org/wiki/Rotation_(mathematics)" target="_top">here</a>.  Don't worry about rotating higher-dimensional <code>Vectors</code>.
+</li></ul> 
+-->
+<p />
+Save your <code>Vector</code> class in a file called <code>Vector.py</code>. 
+<p />
+<b>A word about importing:</b>  When you import a package (e.g. <code>math</code>, <code>Vector</code>, etc.), you can do it in one of two ways.
+Your first option is to have the following statement (typically at the top of your file):
+<pre>
+import math
+</pre>
+Then, you can use any function in that package by preceding that function with the name <code>math</code>.  For example,
+<code>math.sqrt(42)</code> will now invoke the <code>sqrt</code> function in the math package.
+<p />
+Alternatively, you can use this statement:
+<pre>
+from math import &#42;
+</pre>
+Now, you can use the <code>sqrt</code> function in this package simply as <code>sqrt(42)</code>.
+<p />
+It would seem that the <code>import *</code> format is easier to use.  However, it's sometimes cleaner to use the first approach.  That approach allows you (or someone else reading your code) to see which package this function comes from.  That way, you (or your code reader) can go to look at the documentation on that package for more information.  Additionally, by using the first approach, you could potentially have another function called <code>sqrt</code> that is defined in your own file and you can now disambiguate between the math version (<code>math.sqrt</code>) and your own version (<code>sqrt</code>).
+<p />
+It's up to you how you import, but it's good to understand this difference.  It will arise again below.
+<p />
+<h3><a name="Testing_Vectors"></a> Testing Vectors </h3>
+<p />
+Test your <code>Vector</code> class carefully.  Here's some examples of our <code>Vector</code> class being tested.
+<p />
+<pre>
+&#62;&#62;&#62; victor &#61; Vector(1.0, 1.0)
+&#62;&#62;&#62; victor
+(1.0,1.0)
+&#62;&#62;&#62; victor.magnitude()
+1.4142135623730951
+&#62;&#62;&#62; victor.normalize()
+&#62;&#62;&#62; victor
+(0.707106781187,0.707106781187)
+&#62;&#62;&#62; roger &#61; Vector(1.0, 0.0)
+&#62;&#62;&#62; eliot &#61; victor + roger
+&#62;&#62;&#62; eliot
+(1.70710678119,0.707106781187)
+&#62;&#62;&#62; ran &#61; victor - Vector(0.5, 0)
+&#62;&#62;&#62; ran
+(0.207106781187,0.707106781187)
+</pre>
+<p />
+<h4><a name="Submitting_your_Vector_class"></a> Submitting your Vector class </h4>
+<p />
+Submit your <code>Vector.py</code> file in the <code>hw10.zip</code> file on the submission system.<a name="bottom"></a>
+</div>
+<p />
+<p />
+<div class="footer">
+  <a href="/twiki/bin/view/CS6/WebHome" class="twikiLink">CS6 Web</a> &gt; <a href="/twiki/bin/view/CS6/GreenHomework10" class="twikiLink">GreenHomework10</a> &gt;
+  <a href="/twiki/bin/view/CS6/VectorVictor" class="twikiLink">VectorVictor</a>
+  <!-- <div class="date">Fri Nov 14, 2014</div> -->
+<p />
+</div>
+<p />
+<p />
+</body>
+</html>
